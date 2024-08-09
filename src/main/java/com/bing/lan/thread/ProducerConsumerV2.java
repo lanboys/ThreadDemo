@@ -61,6 +61,9 @@ public class ProducerConsumerV2 {
                 while (index == arrWT.length) {
                     try {
                         System.out.println(Thread.currentThread().getName() + " 容器满了，生产失败，准备休眠，并释放锁");
+
+                        // 类似的方法有 AbstractQueuedSynchronizer.ConditionObject.await()，里面就有这个过程代码，可以查看帮助理解
+                        // 释放锁 --> 休眠 --> 被人唤醒 --> 重新获取锁
                         ProducerConsumer.class.wait();
                         // 继续执行的时候，表示休眠结束并且重新获取到锁了，
                         // 重点是：被人唤醒到重新获取锁是有一段时间差的，所以此刻可能并不是结束休眠的时间
