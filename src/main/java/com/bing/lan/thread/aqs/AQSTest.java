@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
+ * https://javadoop.com/post/AbstractQueuedSynchronizer
  * https://www.cnblogs.com/wang-meng/p/12816829.html
  * <p>
  * 公平锁和非公平锁的区别不大，主要区别在调用 lock() 方法的时候是不是直接去插队加锁。
