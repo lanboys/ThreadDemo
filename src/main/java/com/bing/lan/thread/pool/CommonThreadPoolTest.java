@@ -16,9 +16,12 @@ public class CommonThreadPoolTest {
     }
 
     private static void cachedThreadPool() {
+        // 使用的是工作队列SynchronousQueue，这是一个不存储元素的队列，
+        // 如果有空闲子线程在队列里面获取任务，可以通过队列将任务交给子线程执行，
+        // 如果没有空闲子线程，将不会接收任务，直接创建新的子线程去执行。
         ExecutorService threadPool = Executors.newCachedThreadPool();
 
-        for (int i = 0; i < 8; i++) {
+        for (int i = 1; i < 48; i++) {
 
             try {
                 Thread.sleep(100);
@@ -36,7 +39,7 @@ public class CommonThreadPoolTest {
         ExecutorService threadPool = Executors.newFixedThreadPool(3);
         // ExecutorService threadPool = Executors.newSingleThreadExecutor();
 
-        for (int i = 0; i < 18; i++) {
+        for (int i = 1; i < 18; i++) {
 
             try {
                 Thread.sleep(100);
@@ -53,7 +56,7 @@ public class CommonThreadPoolTest {
     private static void scheduledThreadPoolTest() {
         ScheduledExecutorService threadPool = Executors.newScheduledThreadPool(10);
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 1; i < 3; i++) {
 
             try {
                 Thread.sleep(100);
@@ -90,6 +93,7 @@ public class CommonThreadPoolTest {
         }
 
         public void run() {
+            System.out.println(new Date() + "  " + Thread.currentThread().getName() + " work start " + i);
             doWork(i);
             System.out.println(new Date() + "  " + Thread.currentThread().getName() + " work end " + i);
         }

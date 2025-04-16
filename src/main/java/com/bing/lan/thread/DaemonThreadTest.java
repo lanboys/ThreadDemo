@@ -13,10 +13,10 @@ public class DaemonThreadTest {
    */
   public static void main(String[] args) {
 
-    testNormalThread();
-    System.out.println("我是Main线程，我结束后，不影响线程的运行：" + Thread.currentThread().getName());
+    // testNormalThread();
+    testCompletableFuture();
 
-    // testCompletableFuture();
+    System.out.println("我是Main线程，我结束后，不影响线程的运行：" + Thread.currentThread().getName());
   }
 
   /**

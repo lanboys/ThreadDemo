@@ -23,14 +23,14 @@ public class CountDownLatchTest {
         }
 
         try {
-            // 等待线程启动好
+            // 等待工作线程启动好再 await
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
 
         System.out.println("will await");
-        doneSignal.await();
+        doneSignal.await();//所有任务完成
         System.out.println("end");
     }
 
@@ -42,14 +42,14 @@ public class CountDownLatchTest {
         }
 
         try {
-            // 等待线程启动好
+            // 等待工作线程启动好再 countDown
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
 
         System.out.println("will countDown");
-        startSignal.countDown();
+        startSignal.countDown();//开始执行任务
         System.out.println("end");
     }
 
