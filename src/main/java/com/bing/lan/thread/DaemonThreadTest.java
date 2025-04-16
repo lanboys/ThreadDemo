@@ -16,7 +16,7 @@ public class DaemonThreadTest {
     // testNormalThread();
     testCompletableFuture();
 
-    System.out.println("我是Main线程，我结束后，不影响线程的运行：" + Thread.currentThread().getName());
+    System.out.println("我是Main线程，我结束后，不影响其他线程的运行：" + Thread.currentThread().getName());
   }
 
   /**
@@ -24,13 +24,13 @@ public class DaemonThreadTest {
    */
   public static void testNormalThread() {
     Thread daemonThread = new Thread(() -> {
-      System.out.println("我是守护线程：" + Thread.currentThread().getName());
+      System.out.println("===============我是守护线程：" + Thread.currentThread().getName());
 
       try {
         int count = 0;
         while (true) {
           Thread.sleep(5000L);
-          System.out.println("======我是守护线程====" + count++);
+          System.out.println("===============我是守护线程====" + count++);
         }
       } catch (InterruptedException e) {
         e.printStackTrace();
@@ -65,20 +65,33 @@ public class DaemonThreadTest {
    */
   public static void testCompletableFuture() {
     CompletableFuture<Void> voidCompletableFuture = CompletableFuture.runAsync(() -> {
-      System.out.println("我是子线程,Main线程结束后，我依然运行：" + Thread.currentThread().getName());
+          try {
+            for (int i = 0; i < 5; i++) {
+              System.out.println("======执行操作 A====" + Thread.currentThread().getName());
+              Thread.sleep(1000L);
+            }
+            System.out.println();
+          } catch (InterruptedException e) {
+            e.printStackTrace();
+          }
+        })
+        // .whenCompleteAsync((r, e) -> {
+        .whenComplete((r, e) -> {
+          try {
+            for (int i = 0; i < 5; i++) {
+              System.out.println("======执行操作 B====" + Thread.currentThread().getName());
+              Thread.sleep(1000L);
+            }
+          } catch (InterruptedException ee) {
+            ee.printStackTrace();
+          }
+        });
 
-      try {
-        Thread.sleep(1000L);
-        System.out.println("======执行操作 A====");
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
-    }).whenCompleteAsync((r, e) -> {
-      System.out.println("======执行操作 B====");
-    });
     try {
-      // 该方法会阻塞Main线程，告诉Main线程，我执行完了，你才可以结束
+      // 该方法会阻塞Main线程，告诉Main线程，我执行完了，你才可以继续
+      System.out.println("======该方法会阻塞Main线程==1==" + Thread.currentThread().getName());
       voidCompletableFuture.get();
+      System.out.println("======该方法会阻塞Main线程==2==" + Thread.currentThread().getName());
     } catch (Exception e) {
       e.printStackTrace();
     }

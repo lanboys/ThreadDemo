@@ -4,6 +4,8 @@ import java.util.concurrent.*;
 
 /**
  * Created by oopcoder at 2024/8/10 15:45 .
+ *
+ * https://www.cnblogs.com/FraserYu/p/14439497.html
  */
 
 public class ForkJoinPoolTest {
