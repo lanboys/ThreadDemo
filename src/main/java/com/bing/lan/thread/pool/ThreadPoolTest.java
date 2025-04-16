@@ -44,6 +44,7 @@ public class ThreadPoolTest {
         }
 
         public void run() {
+            System.out.println(new Date() + "  " + Thread.currentThread().getName() + " work start " + i);
             doWork(i);
             System.out.println(new Date() + "  " + Thread.currentThread().getName() + " work end " + i);
         }
