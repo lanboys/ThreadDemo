@@ -23,10 +23,8 @@ public class CompletableFutureTest {
     private static final int queueCapacity = 500; // 队列容量限制
 
     private static CompletableFuture<Void> allTasksFuture;
-    private static AtomicLong completedEmbedding = new AtomicLong(0);
     private static AtomicLong completedTasks = new AtomicLong(0);
     private static AtomicLong failedTasks = new AtomicLong(0);
-    private static AtomicReference<Exception> criticalException = new AtomicReference<>(null);
     private static volatile long finishFlag = 0;
 
     // 自定义拒绝策略：当队列满时，由提交线程自己执行任务
